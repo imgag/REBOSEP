@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rebosep"
+version = "0.0.1"
+authors = [
+  { name="Vincent Hammer", email="vincent.hammer@med.uni-tuebingen.de" },
+]
+description = "region boundary specific gene expression patterns"
+readme = "README.md"
+requires-python = ">=3.8.19"
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/imgag/REBOSEP/issues"
+
