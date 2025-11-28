@@ -11,7 +11,9 @@ REBOSEP can be installed using pip:
 `pip install rebosep`
 
 ### Example
+An example workflow including a small dataset for testing purposes.
 
 ### Scripts
+The scripts used to create the results presented in the publication.
 
 ## How to cite
