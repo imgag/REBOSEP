@@ -57,7 +57,6 @@ def bin_recursion(to_check,
 def filter_regions(data_df, 
                    column_to_filter_key="leiden_annotated",
                    filtered_annotation_key="filtered_annotated",
-                   too_small_label="too_small",
                    x_column="x",
                    y_column="y",
                    region_num_key="region_num_key",
@@ -111,8 +110,8 @@ def filter_regions(data_df,
 
     x_arr = []
     y_arr = []
-    bin_coords_x = np.unique(np.sort(region_df["x"].values))
-    bin_coords_y = np.unique(np.sort(region_df["y"].values))                            
+    bin_coords_x = np.unique(np.sort(region_df[x_column].values))
+    bin_coords_y = np.unique(np.sort(region_df[y_column].values))                            
     
     region_num_key_arr = []
     for region_id in unique_regions:
@@ -217,14 +216,16 @@ def find_boundary_distances(obs,
     new_obs = create_new_obs(boundaries_arr_bool,
                              new_obs,
                              is_boundary_col_name,
-                             x_column="x",
-                             y_column="y")
+                             x_column=x_column,
+                             y_column=y_column)
     
     print("running distance detection")
     #4. pad up to max wanted dist
     boundary_distance_table = calculate_boundary_distance(new_obs,  
                                                           max_dist= max_dist,
                                                           testing_out_dir="", 
+                                                          x_column=x_column,
+                                                          y_column=y_column,
                                                           is_boundary_key=is_boundary_col_name, 
                                                           boundary_dist_key=new_col_name, 
                                                           filtered_clusters_key=clusters_key, 
@@ -247,6 +248,9 @@ def find_boundary_distances(obs,
     new_obs.loc[~new_obs[clusters_key].isin(clusters), new_col_name] = np.nan
     new_obs=new_obs.drop(columns=[is_boundary_col_name], errors="raise")
     
+    if verbose:
+        print("Done!")
+    
     return new_obs
 
 
@@ -254,12 +258,10 @@ def calculate_boundary_distance(obs,
                                 max_dist = 20,
                                 x_column="x",
                                 y_column="y",
-                                testing_out_dir="", 
                                 is_boundary_key="is_boundary", 
                                 boundary_dist_key="boundary_dist", 
                                 filtered_clusters_key="filtered_annotated", 
-                                verbose=True,
-                                print_modulo=1):
+                                verbose=True):
 
     """
     performs detection of bin distances
@@ -322,7 +324,7 @@ def select_region_of_interest(anndata,
     manual selection of region of interest
     """
     
-    temp = anndata.raw.to_adata()
+    temp = anndata.copy()
     test_red = temp.obs[[x_column, y_column, col_name]]
     
     fig, ax = plt.subplots()
@@ -480,8 +482,11 @@ def create_dist_gene_table(anndata,
     create workflow output
     write output tsv
     """
-    
-    anndata_raw = anndata.raw.to_adata()
+
+    if use_raw:
+        anndata_raw = anndata.raw.to_adata()
+    else:
+        anndata_raw = anndata.copy()
     anndata_raw.layers[raw_counts_layer] = copy.deepcopy(anndata_raw.X)
 
     ###
@@ -513,7 +518,6 @@ def create_dist_gene_table(anndata,
         f.close()
     
     return conc
-
 
 
 class SelectFromCollection:

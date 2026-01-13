@@ -6,26 +6,30 @@ import pandas as pd
 
 
 def filter_regions_plotting(data_df, 
-                            verbose=True, 
                             region_num_key="region_num_key",
                             plot_masked=False,
                             x_column="x",
-                            y_column="y"
-                            ):
+                            y_column="y",
+                            mirror_x_axis=False,
+                            mirror_y_axis=False):
     """
     visualize masked regions after filter_regions
     """
-    
+
     df = data_df.copy()
+    df[region_num_key] = df[region_num_key].astype(float)
     if plot_masked:
         df[region_num_key] = np.where(df[region_num_key].isna(), 1, np.nan)
-    
+
     table = df.pivot(index=y_column, 
                      columns=x_column, 
                      values=region_num_key).to_numpy()
-
+    table = table.astype(float) 
+    if mirror_x_axis:
+        table = np.flip(table, 1)
+    if mirror_y_axis:
+        table = np.flip(table, 0)
     im = plt.imshow(table, cmap="tab20", interpolation='none')
-
 
 
 def plot_boundary_distances(obs, 
@@ -67,8 +71,8 @@ def plot_boundary_distances(obs,
 
     # plot boundary distances only in manually selected area
     if manual_selection_key != None:
-        table_mask = df_tmp.pivot(index="y", 
-                                  columns="x", 
+        table_mask = df_tmp.pivot(index=y_column, 
+                                  columns=x_column, 
                                   values=manual_selection_key).values # x and y inverted so that matrix orientation fits image
     
     distance_arr_plotting = np.full((len(table_dist), len(table_dist[0])), np.nan)
@@ -101,10 +105,12 @@ def plot_boundary_distances(obs,
         plt.tight_layout()
         plt.axis('off')
 
-
-
 def plot_obs_column(anndata, 
-                    column_key): 
+                    column_key,
+                    x_column="array_col",
+                    y_column="array_row",
+                    mirror_x_axis=False,
+                    mirror_y_axis=False): 
     """
     visualize one column of the anndata.obs dataframe
     """
@@ -125,11 +131,16 @@ def plot_obs_column(anndata,
     
     temp["_translated"] = temp.replace({column_key: translation})[column_key]
     
-    table = temp.pivot(index="y", 
-                       columns="x", 
+    table = temp.pivot(index=y_column, 
+                       columns=x_column, 
                        values="_translated") # x and y inverted so that matrix orientation fits image
     table = table.astype(np.float32)
-    
+    table = table.values
+    if mirror_x_axis:
+        table = np.flip(table, 1)
+    if mirror_y_axis:
+        table = np.flip(table, 0)    
+
     #values = np.unique(table.values.ravel())
     im = plt.imshow(table, cmap="Set1", interpolation="none")
     plt.axis('off')

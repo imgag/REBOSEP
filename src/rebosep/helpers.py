@@ -48,10 +48,11 @@ def set_annotation_by_region(df,
 
     return df
 
-
 def set_manually_selected_region(obs, 
                                  selector, 
-                                 col_name="manually_selected"):
+                                 col_name="manually_selected",
+                                 x_column="x",
+                                 y_column="y"):
 
     """
     creates column in anndata.obs with manually selected bins
@@ -59,6 +60,6 @@ def set_manually_selected_region(obs,
     
     obs[col_name] = False
     for elem in selector.xys[selector.ind]:
-        obs.loc[(obs['x'] == elem[0]) & (obs['y'] == elem[1]*-1),col_name] = True
+        obs.loc[(obs[x_column] == elem[0]) & (obs[y_column] == elem[1]*-1),col_name] = True
     
     return obs
