@@ -223,14 +223,12 @@ def find_boundary_distances(obs,
     #4. pad up to max wanted dist
     boundary_distance_table = calculate_boundary_distance(new_obs,  
                                                           max_dist= max_dist,
-                                                          testing_out_dir="", 
                                                           x_column=x_column,
                                                           y_column=y_column,
                                                           is_boundary_key=is_boundary_col_name, 
                                                           boundary_dist_key=new_col_name, 
                                                           filtered_clusters_key=clusters_key, 
-                                                          verbose=True,
-                                                          print_modulo=print_modulo)
+                                                          verbose=True)
 
     
     
@@ -261,7 +259,8 @@ def calculate_boundary_distance(obs,
                                 is_boundary_key="is_boundary", 
                                 boundary_dist_key="boundary_dist", 
                                 filtered_clusters_key="filtered_annotated", 
-                                verbose=True):
+                                verbose=True,
+                                print_modulo=10):
 
     """
     performs detection of bin distances
@@ -477,7 +476,8 @@ def create_dist_gene_table(anndata,
                            normalization_target_sum=1e6, 
                            filepath=None, 
                            masking_key=None,
-                           filtered_clusters_key="filtered_annotated"):
+                           filtered_clusters_key="filtered_annotated",
+                           use_raw=False):
     """
     create workflow output
     write output tsv

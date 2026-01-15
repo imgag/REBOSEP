@@ -110,11 +110,11 @@ def plot_obs_column(anndata,
                     x_column="array_col",
                     y_column="array_row",
                     mirror_x_axis=False,
-                    mirror_y_axis=False): 
+                    mirror_y_axis=False,
+                    cmap="Set1"): 
     """
     visualize one column of the anndata.obs dataframe
     """
-    
     temp = copy.deepcopy(anndata.obs)  
     temp[column_key].unique()
     
@@ -142,9 +142,38 @@ def plot_obs_column(anndata,
         table = np.flip(table, 0)    
 
     #values = np.unique(table.values.ravel())
-    im = plt.imshow(table, cmap="Set1", interpolation="none")
+    im = plt.imshow(table, cmap=cmap, interpolation="none")
     plt.axis('off')
     #https://stackoverflow.com/questions/25482876/how-to-add-legend-to-imshow-in-matplotlib
     colors = [im.cmap(im.norm(value+1)) for value in range(len(values))]
     patches = [ mpatches.Patch(color=colors[i], label="{l}".format(l=rev_translation[i+1]) ) for i in range(len(values)) ] # i+1 because translation dic starts at 1 
     plt.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0. )
+
+
+def plot_obs_column_continuous_values(anndata, 
+                                      column_key,
+                                      x_column="array_col",
+                                      y_column="array_row",
+                                      mirror_x_axis=False,
+                                      mirror_y_axis=False,
+                                      cmap="viridis"): 
+    """
+    visualize a numeric column of the anndata.obs dataframe
+    """
+
+    table = anndata.obs.pivot(index=y_column, 
+                              columns=x_column, 
+                              values=column_key) # x and y inverted so that matrix orientation fits image
+    
+    #table = table.astype(np.float32)
+    table = table.values
+    if mirror_x_axis:
+        table = np.flip(table, 1)
+    if mirror_y_axis:
+        table = np.flip(table, 0)    
+
+    #values = np.unique(table.values.ravel())
+    im = plt.imshow(table, cmap=cmap, interpolation="none")
+    plt.axis('off')
+    #https://stackoverflow.com/questions/25482876/how-to-add-legend-to-imshow-in-matplotlib
+    plt.colorbar()
