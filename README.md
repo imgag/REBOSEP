@@ -3,17 +3,22 @@ REBOSEP is a workflow designed for detecting gene expression patterns across tis
 We have included a resource of gene expression patterns across five different brain-meninges boundaries in the developing mouse brain: dorsal pallium - meninges, midbrain - meninges, lower hindbrain - meninges, upper hindbrain - meninges, subpallium - meninges.
 
 ## Resource
-The gene expression profiles of five boundary regions can be downloaded from [resource](https://github.com/imgag/REBOSEP/resource).
+The gene expression profiles of five boundary regions can be downloaded from [resource](https://github.com/imgag/REBOSEP_resource/resource).
 
 ## Tool
 ### Installation
 REBOSEP can be installed using pip:
-`pip install rebosep`
+```
+git clone https://github.com/imgag/REBOSEP.git
+mamba create -y -n rebosep_env python=3.10
+mamba activate rebosep_env
+cd REBOSEP
+mamba install --file requirements.txt
+pip install .
+```
 
 ### Example
-An example workflow including a small dataset for testing purposes.
+An example workflow including a small dataset for testing purposes is included in the `example` directory.
 
 ### Scripts
-The scripts used to create the results presented in the publication.
-
-## How to cite
+The scripts used to create the results presented in the publication are included in the `scripts` directory.
