@@ -10,10 +10,10 @@ The gene expression profiles of five boundary regions can be downloaded from [re
 REBOSEP can be installed using pip:
 ```
 git clone https://github.com/imgag/REBOSEP.git
-mamba create -y -n rebosep_env python=3.10
-mamba activate rebosep_env
+conda create -y -n rebosep_env python=3.10
+conda activate rebosep_env
 cd REBOSEP
-mamba install --file requirements.txt
+conda install --file requirements.txt
 pip install .
 ```
 
