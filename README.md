@@ -3,7 +3,7 @@ REBOSEP is a workflow designed for detecting gene expression patterns across tis
 We have included a resource of gene expression patterns across five different brain-meninges boundaries in the developing mouse brain: dorsal pallium - meninges, midbrain - meninges, lower hindbrain - meninges, upper hindbrain - meninges, subpallium - meninges.
 
 ## Resource
-The gene expression profiles of five boundary regions can be downloaded from [resource](https://github.com/imgag/REBOSEP_resource/resource).
+The gene expression profiles of five boundary regions can be downloaded from [resource](https://github.com/imgag/REBOSEP_resource).
 
 ## Tool
 ### Installation
