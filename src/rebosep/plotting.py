@@ -129,7 +129,7 @@ def plot_obs_column(anndata,
         rev_translation[i] = val
         i += 1
     
-    temp["_translated"] = temp.replace({column_key: translation})[column_key]
+    temp["_translated"] = temp[column_key].cat.rename_categories(translation)
     
     table = temp.pivot(index=y_column, 
                        columns=x_column, 
@@ -140,7 +140,7 @@ def plot_obs_column(anndata,
         table = np.flip(table, 1)
     if mirror_y_axis:
         table = np.flip(table, 0)    
-
+    
     #values = np.unique(table.values.ravel())
     im = plt.imshow(table, cmap=cmap, interpolation="none")
     plt.axis('off')
