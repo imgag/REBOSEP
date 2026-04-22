@@ -13,7 +13,7 @@ git clone https://github.com/imgag/REBOSEP.git
 conda create -y -n rebosep_env python=3.10
 conda activate rebosep_env
 cd REBOSEP
-conda install -c conda-forge --file requirements.txt
+conda install -c conda-forge -c main -c anaconda --file requirements.txt
 pip install .
 ```
 
