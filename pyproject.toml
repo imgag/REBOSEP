@@ -10,7 +10,7 @@ authors = [
 ]
 description = "region boundary specific gene expression patterns"
 readme = "README.md"
-requires-python = ">=3.8.19"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
 ]
