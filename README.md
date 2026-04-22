@@ -18,7 +18,5 @@ pip install .
 ```
 
 ### Example
-An example workflow including a small dataset for testing purposes is included in the `example` directory.
-
-### Scripts
-The scripts used to create the results presented in the publication are included in the `scripts` directory.
+An example workflow including a small dataset for testing purposes is included in the `example` directory. We recommend Jupyter Server to run the notebook.
+Note: the packages required for the `tutorial_clustering.ipynb` script are not included in the REBOSEP installation. They have to be installed separately.
