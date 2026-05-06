@@ -107,8 +107,8 @@ def plot_boundary_distances(obs,
 
 def plot_obs_column(anndata, 
                     column_key,
-                    x_column="array_col",
-                    y_column="array_row",
+                    x_column="x",
+                    y_column="y",
                     mirror_x_axis=False,
                     mirror_y_axis=False,
                     cmap="Set1"): 
@@ -152,8 +152,8 @@ def plot_obs_column(anndata,
 
 def plot_obs_column_continuous_values(anndata, 
                                       column_key,
-                                      x_column="array_col",
-                                      y_column="array_row",
+                                      x_column="x",
+                                      y_column="y",
                                       mirror_x_axis=False,
                                       mirror_y_axis=False,
                                       cmap="viridis"): 
